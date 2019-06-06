@@ -3,119 +3,24 @@ Process help=*
 
 parm inp        type=string		count=1
 parm out        type=string		count=1
-parm dtm		type=string		count=1
-parm method		type=string		count=1		default="corr"		valid=CORR,MODEL,X,Y
-parm phofunc	type=string		count=1		default="lambert"	valid=LAMBERT,LOMSEEL,MINNAERT,HAPKE,LUNLAM,LUNLAMEMP,INCI,PHASE,ASPECT,SLOPE,EMI,none,TOPOCOR,GAMMA,CCOR,TOA,RADIANS,LAT,LON
-parm usedtm		type=string		count=1		default="NO"		valid=YES,NO
-parm mdenoise	type=string		count=1		default="NO"
-parm chb		type=string		count=1		default="NONE"
-parm kparam		type=REAL		count=1		default=-1
-parm ccorval		type=REAL		count=1		default=-1
-parm tval		type=real		count=1		default=70
-parm hapkew		type=real		count=1		default=0.85
-parm hapkeb		type=real		count=1		default=0.12
-parm hapkec		type=real		count=1		default=0.6
-parm hapkeh		type=real		count=1		default=0.05
-parm hapkeb0	type=real		count=1		default=1.
-parm hapketheta type=real		count=1		default=0.
-
-parm maxmem		type=real		count=1		default=4096.
-parm SL         TYPE=int        COUNT=0:1   DEFAULT=1
-parm NL         TYPE=int        COUNT=0:1   DEFAULT=0
-parm SS         TYPE=int        COUNT=0:1   DEFAULT=1
-parm NS         TYPE=int        COUNT=0:1   DEFAULT=0
-parm auxout		type=string		count=1		default="no"		valid=yes,no
-parm auxcorr	type=string		count=1		default="no"		valid=yes,no
-parm reflout	type=string		count=1		default="no"		valid=yes,no
-parm radiout	type=string		count=1		default="no"		valid=yes,no
-parm latlon		type=string		count=1		default="no"		valid=yes,no
-parm ipol       type=string		count=1		default="linear"	valid=linear,none
-parm ori        type=string		count=1		default="EXTORI"	valid=EXTORI,SPICE
-parm EXTORI     type=string		count=0:1
-parm GCALDIR	type=string		count=1		default="/vicsys/geocal"
-PARM ANCHDIST	TYPE=int      COUNT=0:1  VALID=(1:1000)  DEFAULT=5
-parm TPCFILE    type=(string,120) count=1       default="/vicsys/common_kernel/p_constants.ker"
-parm A_AXIS	type=(real)	 count=0:1	default=--
-parm B_AXIS	type=(real) 	 count=0:1	default=--
-parm C_AXIS	type=(real) 	 count=0:1	default=--
-parm MP_TYPE	type=(string,40) count=1	default=SINUSOIDAL +
-	valid=(	ALBERS_ONE_PAR,				+
-		ALBERS_TWO_PAR,				+
-		CYLINDRICAL_E_A,				+
-		EQUIDISTANT,					+
-		LAMBERT_AZIMUTH,				+
-		LAMBERT_ONE_PAR,				+
-		LAMBERT_TWO_PAR,				+
-		MERCATOR,					+
-		MOLLWEIDE,					+
-		ORTHOGRAPHIC,					+
-		SINUSOIDAL,					+
-		STEREOGRAPHIC,					+
-		PERSPECTIVE,					+
-		RD,					+
-		UTM,					+
-		BMN28,					+
-		BMN31,					+
-		BMN34,					+
-		ING,					+
-		SLK,					+
-		GAUSS_KRUEGER,					+
-		SOLDNER,					+
-		CORRECTION ) 
-parm MP_RES	type=real	count=0:1	default=--
-parm MP_SCALE 	type=real	count=0:1	default=--
-parm POS_DIR	type=keyword	count=1		default=EAST +
-						valid=(EAST,WEST)	
-parm CEN_LAT	type=real	count=0:1	default=--
-parm CEN_LONG	type=real	count=0:1	default=--
-parm SPHER_AZ	type=real	count=1		default=0.0
-parm L_PR_OFF	type=real	count=0:1	default=--
-parm S_PR_OFF	type=real	count=0:1	default=--
-parm CART_AZ	type=real	count=0:1	default=--
-parm F_ST_PAR	type=real	count=0:1	default=--
-parm S_ST_PAR	type=real	count=0:1	default=--
-parm USEMP 	type=keyword	count=0:1	default=-- valid=(USEMP)
-parm F_ST_PAR	type=real	count=0:1	default=--
-parm S_ST_PAR	type=real	count=0:1	default=--
-parm BOD_LONG	type=(real) 	 count=0:1	default=--
-PARM SL_INP       TYPE=int      COUNT=0:1 DEFAULT=1
-PARM NL_INP       TYPE=int      COUNT=0:1 DEFAULT=0
-PARM BSPFILE    TYPE=(STRING,120) COUNT=0:3 DEFAULT=HWSPICE_BSP,SUNKER
-PARM BCFILE     TYPE=(STRING,120) COUNT=0:6 DEFAULT=HWSPICE_BC
-PARM TSCFILE	type=(string,120) count=0:6 default=HWSPICE_TSC
-PARM TIFILE	type=(string,120) count=1	default=HWSPICE_TI
-PARM TFFILE	type=(string,120) count=1	default=HWSPICE_TF
-PARM TLSFILE	type=(string,120) count=0:1	default=LEAPSECONDS
-PARM GEOCAL_VERSION	type=string	DEFAULT="02"
+parm dtm	type=string		count=1
 
 END-PROC
 .Title
-FU Vicar tool HRPHOTO
+FU Vicar tool TIF2VIC
 .help
 PURPOSE
-HRPHOTO produces lambertian albedo of the image ( dn_out = dn_in/cos(solar_incidence) ). Values over 255 are set to 32000. Negative values stay the same.
-Method=radiance results in an real format image. Each DN is multiplicated with RADIANCE_SCALING FACTOR and RADIANCE OFFSET is added.
-label
+WRITE VICAR MAPS FROM GeoTif, or any other geospatial format readable by the GDAL library.
 
 WRITTEN BY
 
-Sebastian Walter, 20.02.2009
+Sebastian Walter
 
 .Level1
 .VARI inp
  necessary string
-.VARI database
- necessary string
-.VARI table
- necessary string
-.VARI lat
- optional string
-.VARI lon
- optional string
-.VARI utc
- optional string
 
 .Level2
 .VARI inp
- This neccessary parameter consists the unit number of the Vicar-image.
+ This neccessary parameter consists of the input file name
 .END
